@@ -3,17 +3,36 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Road To Android Developer</title>
+  <title>单例模式分析 | Road To Android Developer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Android is the best.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Road To Android Developer">
-<meta property="og:url" content="http:/index.html">
+  <meta name="description" content="单例模式《Android源码设计模式解析与实战》读书笔记
+介绍单例对象的类必须保证只有一个实例存在。
+定义某个类只有一个实例，而且自行实例化并向整个系统提供这个实例。
+场景避免产生多个对象消耗过多资源，或者某种类型的对象只应该有且只有一个。例如创建一个对象需要访问IO和数据库等资源，这时候就该考虑使用单例模式。
+关键点
+构造函数不对外开放，一般为private
+通过一个静态方法或者枚举返回实例。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单例模式分析">
+<meta property="og:url" content="http:/2016/04/21/Singleton/index.html">
 <meta property="og:site_name" content="Road To Android Developer">
-<meta property="og:description" content="Android is the best.">
+<meta property="og:description" content="单例模式《Android源码设计模式解析与实战》读书笔记
+介绍单例对象的类必须保证只有一个实例存在。
+定义某个类只有一个实例，而且自行实例化并向整个系统提供这个实例。
+场景避免产生多个对象消耗过多资源，或者某种类型的对象只应该有且只有一个。例如创建一个对象需要访问IO和数据库等资源，这时候就该考虑使用单例模式。
+关键点
+构造函数不对外开放，一般为private
+通过一个静态方法或者枚举返回实例。">
+<meta property="og:updated_time" content="2016-04-21T15:02:53.847Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Road To Android Developer">
-<meta name="twitter:description" content="Android is the best.">
+<meta name="twitter:title" content="单例模式分析">
+<meta name="twitter:description" content="单例模式《Android源码设计模式解析与实战》读书笔记
+介绍单例对象的类必须保证只有一个实例存在。
+定义某个类只有一个实例，而且自行实例化并向整个系统提供这个实例。
+场景避免产生多个对象消耗过多资源，或者某种类型的对象只应该有且只有一个。例如创建一个对象需要访问IO和数据库等资源，这时候就该考虑使用单例模式。
+关键点
+构造函数不对外开放，一般为private
+通过一个静态方法或者枚举返回实例。">
   
     <link rel="alternate" href="/atom.xml" title="Road To Android Developer" type="application/atom+xml">
   
@@ -66,9 +85,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-Singleton" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Singleton" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/04/21/Singleton/" class="article-date">
   <time datetime="2016-04-21T15:01:00.000Z" itemprop="datePublished">2016-04-21</time>
@@ -85,8 +102,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/21/Singleton/">单例模式分析</a>
+    <h1 class="article-title" itemprop="name">
+      单例模式分析
     </h1>
   
 
@@ -162,163 +179,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-chapter3" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/04/20/chapter3/" class="article-date">
-  <time datetime="2016-04-19T17:53:00.000Z" itemprop="datePublished">2016-04-20</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Android/">Android</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/20/chapter3/">《Android开发艺术探索》 第三章 View的事件体系</a>
-    </h1>
+    <a href="/2016/04/20/chapter3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">《Android开发艺术探索》 第三章 View的事件体系</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>《Android开发艺术探索》 第三章 View的事件体系</p>
-<ol>
-<li><p>View 基础</p>
-<ul>
-<li><p>View的位置参数</p>
-</li>
-<li><p>View的位置主要由四个顶点决定，四个属性：top left right buttom 。这些坐标都是相对坐标，相对于父容器。left = getLeft()。</p>
-</li>
-<li><p>从3.0开始，增加了几个参数。x y translationX translationY。x = left + translationX。当view向右移动时，left不变，translationX变大，x随之变大。</p>
-</li>
-<li><p>MotionEvent 和 TouchSlop</p>
-<ul>
-<li><p>按下 : ACTION_DOWN 移动 : ACTION_MOVE 松开 : ACTION_UP</p>
-</li>
-<li><p>通过 MotionEvent 对象获取事件发生的 x y 坐标。 getX() getY() 获取的是相对于当前View的坐标， getRawX() getRawY() 获取相对于左上角的 x y 坐标。</p>
-</li>
-<li><p>TouchSlop 是系统能够识别出的滑动的最小距离。ViewConfiguration.get(getContext()).getScaledTouchSlop()。</p>
-</li>
-</ul>
-</li>
-<li><p>VelocityTracker GestureDetector Scroller</p>
-<ul>
-<li><p>使用 VelocityTracker 需要注意的是当不需要的时候，需要调用 clear 方法重置并回收内存。</p>
-</li>
-<li><p>为了辅助检测用户的 单击 滑动 长按 双击 等行为，可以是用 GestureDetector。首先创建一个 GestureDetector 对象并实现 OnGestureListener 接口。然后接管目标<br>View 的onTouchEvent 方法。最后就可以有选择的实现 OnGestureListener 和 OnDoubleTabListener 中的方法了。</p>
-</li>
-<li><p>scrollTo/scrollBy 方法进行滑动时，其过程是瞬间完成的。此时可以使用 Scroller 滑动效果。</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>View 滑动</p>
-<ul>
-<li>三种方法：1. 通过 View 本身提供的 scrollTo/scrollBy 方法 2. 动画 3. 改变 View 的 LayoutParams。</li>
-<li>View 动画是对 View 的影像进行操作，并不会改变 View 的未知参数和宽高。</li>
-<li>改变 LayoutParams 通过改变 View 的 marginLeft 属性。</li>
-<li>比较：1. scrollTo/scrollBy 只能滑动 View 中的内容部分，而不能滑动 View 的位置。 2. 动画适用于不需要交互的 View 3. LayoutParams 适用于需要交互的 View。</li>
-</ul>
-</li>
-<li><p>弹性滑动</p>
-<ul>
-<li>弹性滑动的共同思想都是将大滑动分成若干次小的滑动，并在一个时间段内完成。具体可以通过Scroller、Handler&amp;postDelayer以及Thread&amp;sleep等。</li>
-<li>使用Scroller：原理：首先调用Scroller.startScroll()方法，然后调用invalidate()方法重绘，onDraw()方法中会调用computeScroll()方法，在该方法中获取当前的scrollX和scrollY，然后调用scrollTo（）实现滑动，然后再次重绘。</li>
-<li>动画：动画没什么好说的，属性动画</li>
-<li>Handler&amp;postDelay：通过延时发送消息，在消息中进行View滑动，接连不断的发送消息，实现弹性滑动。</li>
-</ul>
-</li>
-<li><p>View的事件分发机制</p>
-<ul>
-<li>当一个MotionEvent产生以后，系统需要把这些事件传递给一个具体的View，这个传递的过程就是分发过程。<br>分发过程由三个方法完成：dispatchTouchEvent，onInterceptTouchEvent,onTouchEvent。</li>
-<li>dispatchTouchEvent:用来进行事件分发，如果事件能够传递到当前View，则一定会调用到这个方法。返回值受当前View的onTouchEvent和下级View的dispatchTouchView影响，表示是否消耗这个事件。</li>
-<li>onInterceptTouchEvent():表示是否拦截这个事件，如果当前View拦截，那么在同一个事件序列中，此方法不会再被调动，返回结果表示是否拦截。</li>
-<li>onTouchEvent：用来处理单击事件，返回值表示是否消耗当前事件。</li>
-</ul>
-</li>
-<li><p>View的滑动冲突</p>
-<ul>
-<li>内外滑动方向不一致：ScrollView和ListView的冲突：左右滑时，让外部拦截点击事件，上下滑时，内部拦截，所以首先需要判断滑动的方向。。</li>
-<li>内外滑动方向一致：无法判断用户想让哪一层滑动：不能通过方向判断，可以通过业务逻辑（设置状态）。</li>
-<li>以上的嵌套。</li>
-</ul>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http:/2016/04/20/chapter3/" data-id="cinaf4cao00011gf0wqawifio" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/《Android开发艺术探索》/">《Android开发艺术探索》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书笔记/">读书笔记</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-Handler" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/31/Handler/" class="article-date">
-  <time datetime="2016-03-31T15:59:00.000Z" itemprop="datePublished">2016-03-31</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Android/">Android</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/31/Handler/">Handler内存泄露原理及解决方法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Handler内存泄露原理及解决方法"><a href="#Handler内存泄露原理及解决方法" class="headerlink" title="Handler内存泄露原理及解决方法"></a>Handler内存泄露原理及解决方法</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为Android采取了单线程UI模型，开发者无法在子线程中更新UI，为此Android为我们提供了Handler这个工具，可以开发者切换到主线程更新UI。</p>
-        
-          <p class="article-more-link">
-            <a href="/2016/03/31/Handler/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http:/2016/03/31/Handler/" data-id="cinaf4cex000i1gf03m2864m5" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能优化/">性能优化</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 </section>
         
