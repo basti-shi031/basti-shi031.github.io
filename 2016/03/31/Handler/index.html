@@ -11,7 +11,7 @@
 <meta property="og:url" content="http:/2016/03/31/Handler/index.html">
 <meta property="og:site_name" content="Road To Android Developer">
 <meta property="og:description" content="Handler内存泄露原理及解决方法前言因为Android采取了单线程UI模型，开发者无法在子线程中更新UI，为此Android为我们提供了Handler这个工具，可以开发者切换到主线程更新UI。">
-<meta property="og:updated_time" content="2016-04-01T07:08:58.694Z">
+<meta property="og:updated_time" content="2016-04-24T08:38:26.021Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Handler内存泄露原理及解决方法">
 <meta name="twitter:description" content="Handler内存泄露原理及解决方法前言因为Android采取了单线程UI模型，开发者无法在子线程中更新UI，为此Android为我们提供了Handler这个工具，可以开发者切换到主线程更新UI。">
@@ -93,8 +93,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Handler内存泄露原理及解决方法"><a href="#Handler内存泄露原理及解决方法" class="headerlink" title="Handler内存泄露原理及解决方法"></a>Handler内存泄露原理及解决方法</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为Android采取了单线程UI模型，开发者无法在子线程中更新UI，为此Android为我们提供了Handler这个工具，可以开发者切换到主线程更新UI。</p>
-<a id="more"></a>
+        <h1 id="Handler内存泄露原理及解决方法"><a href="#Handler内存泄露原理及解决方法" class="headerlink" title="Handler内存泄露原理及解决方法"></a>Handler内存泄露原理及解决方法</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为Android采取了单线程UI模型，开发者无法在子线程中更新UI，为此Android为我们提供了Handler这个工具，可以开发者切换到主线程更新UI。<br><a id="more"></a></p>
 <h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>首先看一段示例代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LeakCanaryActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span></span><br><span class="line"></span><br><span class="line">    <span class="title">private</span>  <span class="title">Handler</span> <span class="title">mHandler</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line"></span><br><span class="line">        mHandler = <span class="keyword">new</span> Handler() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">super</span>.handleMessage(msg);</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        Message message = Message.obtain();</span><br><span class="line">        message.what = <span class="number">1</span>;</span><br><span class="line">        mHandler.sendMessageDelayed(message,<span class="number">10</span>*<span class="number">60</span>*<span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>这段代码的逻辑很简单，mHandler延时了10分钟发送消息，类似的代码在我们的项目中也经常出现，但是这样的代码会出现一个问题。</p>
 <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>我们在项目中集成 Square 的开源库 LeakCanary,有关这个库的介绍及使用请看：<a href="https://github.com/square/leakcanary" target="_blank" rel="external">Github.LeakCanary</a>。</p>
@@ -129,7 +128,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http:/2016/03/31/Handler/" data-id="cinaf4cex000i1gf03m2864m5" class="article-share-link">Share</a>
+      <a data-url="http:/2016/03/31/Handler/" data-id="cinebq3t20000nwf0egb0g3yr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能优化/">性能优化</a></li></ul>
@@ -183,7 +182,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/《Android开发艺术探索》/" style="font-size: 10px;">《Android开发艺术探索》</a> <a href="/tags/性能优化/" style="font-size: 10px;">性能优化</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/读书笔记/" style="font-size: 15px;">读书笔记</a>
+      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/《Android开发艺术探索》/" style="font-size: 10px;">《Android开发艺术探索》</a> <a href="/tags/性能优化/" style="font-size: 10px;">性能优化</a> <a href="/tags/设计模式/" style="font-size: 13.33px;">设计模式</a> <a href="/tags/读书笔记/" style="font-size: 16.67px;">读书笔记</a>
     </div>
   </div>
 
@@ -203,6 +202,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/04/24/Prototype/">原型模式分析</a>
+          </li>
         
           <li>
             <a href="/2016/04/21/Singleton/">单例模式分析</a>

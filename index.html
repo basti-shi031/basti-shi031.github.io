@@ -68,6 +68,54 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Prototype" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/04/24/Prototype/" class="article-date">
+  <time datetime="2016-04-24T06:33:00.000Z" itemprop="datePublished">2016-04-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/24/Prototype/">原型模式分析</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h1><p>《Android源码设计模式解析与实战》读书笔记</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>原型模式是一个创建型模式，该模式有一个样板实例，用户从这个对象中复制出一个内部属性一致的对象。多用于创建复杂的或者构造耗时的实例。因为在这种情况下，复制一个已经存在的实例可使程序运行更加高效。<br>
+        
+          <p class="article-more-link">
+            <a href="/2016/04/24/Prototype/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http:/2016/04/24/Prototype/" data-id="cinebq3u2000pnwf0s0gwtgzc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书笔记/">读书笔记</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Singleton" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/04/21/Singleton/" class="article-date">
@@ -95,66 +143,16 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><p>《Android源码设计模式解析与实战》读书笔记</p>
-<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>单例对象的类必须保证只有一个实例存在。</p>
-<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>某个类只有一个实例，而且自行实例化并向整个系统提供这个实例。</p>
-<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p>避免产生多个对象消耗过多资源，或者某种类型的对象只应该有且只有一个。例如创建一个对象需要访问IO和数据库等资源，这时候就该考虑使用单例模式。</p>
-<h2 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h2><ol>
-<li>构造函数不对外开放，一般为private</li>
-<li>通过一个静态方法或者枚举返回实例。</li>
-<li>确保实例只有一个，尤其是在多线程的情况下。</li>
-<li>确保单例对象在反序列化时不会重新构件对象。</li>
-</ol>
-<h2 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h2><ul>
-<li><p>懒汉模式<br>懒汉模式声明一个静态对象，当用户第一次调用getInstance时进行初始化。具体实现如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">/**</span><br><span class="line"> * 懒汉模式</span><br><span class="line"> * Created by Bowen on 2016-04-20.</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton1</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton1 mSingleton;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton1</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">synchronized</span> <span class="keyword">static</span> Singleton1 <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(mSingleton == <span class="keyword">null</span>)&#123;</span><br><span class="line">            mSingleton = <span class="keyword">new</span> Singleton1();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> mSingleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>需要注意的是，在getInstance方法上，我们使用了synchronized关键字修饰，这就是为了考虑到 关键点 中的第3点（确保实例只有一个，尤其是在多线程的情况下），考虑到如果有两个线程同时调用了getInstance方法，两个线程在进行mSingleton == null的判断时，结果都是true，导致mSingleton被实例化了两次，为了避免这种情况，我们需要用synchronized进行同步，但这又会导致另一个效率问题，每次调用getInstance方法时，都会进行同步，会造成不必要的同步开销。另外，懒汉模式在第一次调用getInstance时才进行实例化，反应稍慢。</p>
-</li>
-</ul>
-<ul>
-<li><p>饿汉模式<br>饿汉模式是在声明对象时就已经完成了初始化，具体实现如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 饿汉模式</span><br><span class="line"> * Created by Bowen on 2016-04-21.</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton2</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton2 mSingleton = <span class="keyword">new</span> Singleton2();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton2</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton2 <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mSingleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在饿汉模式中，并没有出现懒汉模式的问题：每次调用getInstance都需要同步。</p>
-</li>
-<li><p>Double CheckLock(DCL)模式<br>DCL模式实现了需要时实例化，并保证了线程安全，同时单例对象初始化后以后不进行同步锁：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">/**</span><br><span class="line"> * Double CheckLock(DCL)模式</span><br><span class="line"> *</span><br><span class="line"> * Created by Bowen on 2016-04-21.</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton3</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton3 mSingleton;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton3</span><span class="params">()</span></span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton3 <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mSingleton == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton3.class)&#123;</span><br><span class="line">                <span class="keyword">if</span> (mSingleton == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    mSingleton = <span class="keyword">new</span> Singleton3();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> mSingleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>为了避免单例对象实例化以后进行不必要的同步，所以对实例对象进行第一次判空，如果此时实例对象已经被实例化，那么将不会执行同步代码块。当同步后依然为空，另外，用volatile关键字修饰实例对象，保证每一次都从主存中读取对象，避免多线程的情况下出现问题。</p>
-<ul>
-<li><p>静态内部类单例模式</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 静态内部类单例模式</span><br><span class="line"> *</span><br><span class="line"> * Created by Bowen on 2016-04-21.</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton4</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton4</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton4 <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> SingletonHolder.mInstance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonHolder</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton4 mInstance = <span class="keyword">new</span> Singleton4();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当用户第一次调用getInstance方法时，mInstance才被初始化。静态内部类的单例模式，不仅保证了线程安全，也保证了对象的唯一性，并延迟了对象实例化的时间。</p>
-</li>
-<li><p>枚举单例</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">/**</span><br><span class="line"> * 枚举单例</span><br><span class="line"> *</span><br><span class="line"> * Created by Bowen on 2016-04-21.</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Singleton5 &#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doWork</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  默认枚举示例的创建时线程安全的，并且反序列化的情况下仍然是一个单例。</p>
-</li>
-</ul>
-<h2 id="Android源码中的单例模式"><a href="#Android源码中的单例模式" class="headerlink" title="Android源码中的单例模式"></a>Android源码中的单例模式</h2><p>  LayoutInflater类，我们经常会在ListView中的getView方法使用到LayoutInflater，示例代码：<br>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> View <span class="title">getView</span><span class="params">(<span class="keyword">int</span> position, View convertView, ViewGroup parent)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (convertView == <span class="keyword">null</span>)&#123;</span><br><span class="line">        convertView = LayoutInflater.from(mContext).inflate(layoutiId,parent,<span class="keyword">false</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> convertView;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>  通过LayoutInflater.from(context)来获取LayoutInflater的服务，下面是具体实现：<br>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Obtains the LayoutInflater from the given context.</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LayoutInflater <span class="title">from</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">    LayoutInflater LayoutInflater =</span><br><span class="line">            (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);</span><br><span class="line">    <span class="keyword">if</span> (LayoutInflater == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> AssertionError(<span class="string">"LayoutInflater not found."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> LayoutInflater;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>  因为Context是一个Abstract类，getSystemService方法的具体实现在Context的实现类中，进入ContextImpl类定位到具体实现：<br>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">public</span> Object Object <span class="title">getService</span><span class="params">(ContextImpl ctx)</span> </span>&#123;</span><br><span class="line">    ArrayList&lt;Object&gt; cache = ctx.mServiceCache;</span><br><span class="line">    Object service;</span><br><span class="line">    <span class="keyword">synchronized</span> (cache) &#123;</span><br><span class="line">    <span class="keyword">if</span> (cache.size() == <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// Initialize the cache vector on first access.</span></span><br><span class="line">    <span class="comment">// At this point sNextPerContextServiceCacheIndex</span></span><br><span class="line">    <span class="comment">// is the number of potential services that are</span></span><br><span class="line">    <span class="comment">// cached per-Context.</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; sNextPerContextServiceCacheIndex; i++) &#123;</span><br><span class="line">          cache.add(<span class="keyword">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    service = cache.get(mContextCacheIndex);</span><br><span class="line">    <span class="keyword">if</span> (service != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> service;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    service = createService(ctx);</span><br><span class="line">    cache.set(mContextCacheIndex, service);</span><br><span class="line">    <span class="keyword">return</span> service;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>可以看到。ContextImpl中使用了一个HashMap存放何种Service，用户根据serviceName作为key查找对应的的服务，当第一次获取时，创建对象后并将对象存入map中，下次使用时只要从map中取出即可。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li><p>优点</p>
-<ol>
-<li>单例模式在内中只有一个示例，减少内存开支。</li>
-<li>减少系统的性能开销、当一个对象的产生需要较多资源时，如读取配置产生其他以来对象时，则可以通过应用启动时直接产生一个单例对象，然后用永久驻留内存的方式解决。</li>
-<li>避免对资源的多重占用，例如对文件操作，由于只有一个示例存在内存中，避免对同一个资源文件同时写操作。</li>
-<li>在系统设置全局的访问点，优化和共享资源访问。</li>
-</ol>
-</li>
-<li><p>缺点</p>
-<ol>
-<li>单例模式一般没有接口，扩展比较困难，如果要扩展，必须要修改代码。</li>
-<li>如果单例对象持有Context，则很容易引起内存泄露（单例模式的生命周期和应用一样），所以最好传递Application的Context。</li>
-</ol>
-</li>
-</ul>
-
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>单例对象的类必须保证只有一个实例存在。<br>
+        
+          <p class="article-more-link">
+            <a href="/2016/04/21/Singleton/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http:/2016/04/21/Singleton/" data-id="cinaf4cai00001gf0pxl30aej" class="article-share-link">Share</a>
+      <a data-url="http:/2016/04/21/Singleton/" data-id="cinebq3t70001nwf0fpl9ftxi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书笔记/">读书笔记</a></li></ul>
@@ -192,75 +190,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>《Android开发艺术探索》 第三章 View的事件体系</p>
-<ol>
-<li><p>View 基础</p>
-<ul>
-<li><p>View的位置参数</p>
-</li>
-<li><p>View的位置主要由四个顶点决定，四个属性：top left right buttom 。这些坐标都是相对坐标，相对于父容器。left = getLeft()。</p>
-</li>
-<li><p>从3.0开始，增加了几个参数。x y translationX translationY。x = left + translationX。当view向右移动时，left不变，translationX变大，x随之变大。</p>
-</li>
-<li><p>MotionEvent 和 TouchSlop</p>
-<ul>
-<li><p>按下 : ACTION_DOWN 移动 : ACTION_MOVE 松开 : ACTION_UP</p>
-</li>
-<li><p>通过 MotionEvent 对象获取事件发生的 x y 坐标。 getX() getY() 获取的是相对于当前View的坐标， getRawX() getRawY() 获取相对于左上角的 x y 坐标。</p>
-</li>
-<li><p>TouchSlop 是系统能够识别出的滑动的最小距离。ViewConfiguration.get(getContext()).getScaledTouchSlop()。</p>
-</li>
-</ul>
-</li>
-<li><p>VelocityTracker GestureDetector Scroller</p>
-<ul>
-<li><p>使用 VelocityTracker 需要注意的是当不需要的时候，需要调用 clear 方法重置并回收内存。</p>
-</li>
-<li><p>为了辅助检测用户的 单击 滑动 长按 双击 等行为，可以是用 GestureDetector。首先创建一个 GestureDetector 对象并实现 OnGestureListener 接口。然后接管目标<br>View 的onTouchEvent 方法。最后就可以有选择的实现 OnGestureListener 和 OnDoubleTabListener 中的方法了。</p>
-</li>
-<li><p>scrollTo/scrollBy 方法进行滑动时，其过程是瞬间完成的。此时可以使用 Scroller 滑动效果。</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>View 滑动</p>
-<ul>
-<li>三种方法：1. 通过 View 本身提供的 scrollTo/scrollBy 方法 2. 动画 3. 改变 View 的 LayoutParams。</li>
-<li>View 动画是对 View 的影像进行操作，并不会改变 View 的未知参数和宽高。</li>
-<li>改变 LayoutParams 通过改变 View 的 marginLeft 属性。</li>
-<li>比较：1. scrollTo/scrollBy 只能滑动 View 中的内容部分，而不能滑动 View 的位置。 2. 动画适用于不需要交互的 View 3. LayoutParams 适用于需要交互的 View。</li>
-</ul>
-</li>
-<li><p>弹性滑动</p>
-<ul>
-<li>弹性滑动的共同思想都是将大滑动分成若干次小的滑动，并在一个时间段内完成。具体可以通过Scroller、Handler&amp;postDelayer以及Thread&amp;sleep等。</li>
-<li>使用Scroller：原理：首先调用Scroller.startScroll()方法，然后调用invalidate()方法重绘，onDraw()方法中会调用computeScroll()方法，在该方法中获取当前的scrollX和scrollY，然后调用scrollTo（）实现滑动，然后再次重绘。</li>
-<li>动画：动画没什么好说的，属性动画</li>
-<li>Handler&amp;postDelay：通过延时发送消息，在消息中进行View滑动，接连不断的发送消息，实现弹性滑动。</li>
-</ul>
-</li>
-<li><p>View的事件分发机制</p>
-<ul>
-<li>当一个MotionEvent产生以后，系统需要把这些事件传递给一个具体的View，这个传递的过程就是分发过程。<br>分发过程由三个方法完成：dispatchTouchEvent，onInterceptTouchEvent,onTouchEvent。</li>
-<li>dispatchTouchEvent:用来进行事件分发，如果事件能够传递到当前View，则一定会调用到这个方法。返回值受当前View的onTouchEvent和下级View的dispatchTouchView影响，表示是否消耗这个事件。</li>
-<li>onInterceptTouchEvent():表示是否拦截这个事件，如果当前View拦截，那么在同一个事件序列中，此方法不会再被调动，返回结果表示是否拦截。</li>
-<li>onTouchEvent：用来处理单击事件，返回值表示是否消耗当前事件。</li>
-</ul>
-</li>
-<li><p>View的滑动冲突</p>
-<ul>
-<li>内外滑动方向不一致：ScrollView和ListView的冲突：左右滑时，让外部拦截点击事件，上下滑时，内部拦截，所以首先需要判断滑动的方向。。</li>
-<li>内外滑动方向一致：无法判断用户想让哪一层滑动：不能通过方向判断，可以通过业务逻辑（设置状态）。</li>
-<li>以上的嵌套。</li>
-</ul>
-</li>
-</ol>
-
+        <p>《Android开发艺术探索》 第三章 View的事件体系<br>
+        
+          <p class="article-more-link">
+            <a href="/2016/04/20/chapter3/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http:/2016/04/20/chapter3/" data-id="cinaf4cao00011gf0wqawifio" class="article-share-link">Share</a>
+      <a data-url="http:/2016/04/20/chapter3/" data-id="cinebq3tj0004nwf0khlmiw9x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/《Android开发艺术探索》/">《Android开发艺术探索》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书笔记/">读书笔记</a></li></ul>
@@ -298,7 +237,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Handler内存泄露原理及解决方法"><a href="#Handler内存泄露原理及解决方法" class="headerlink" title="Handler内存泄露原理及解决方法"></a>Handler内存泄露原理及解决方法</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为Android采取了单线程UI模型，开发者无法在子线程中更新UI，为此Android为我们提供了Handler这个工具，可以开发者切换到主线程更新UI。</p>
+        <h1 id="Handler内存泄露原理及解决方法"><a href="#Handler内存泄露原理及解决方法" class="headerlink" title="Handler内存泄露原理及解决方法"></a>Handler内存泄露原理及解决方法</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为Android采取了单线程UI模型，开发者无法在子线程中更新UI，为此Android为我们提供了Handler这个工具，可以开发者切换到主线程更新UI。<br>
         
           <p class="article-more-link">
             <a href="/2016/03/31/Handler/#more">Read More</a>
@@ -307,7 +246,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http:/2016/03/31/Handler/" data-id="cinaf4cex000i1gf03m2864m5" class="article-share-link">Share</a>
+      <a data-url="http:/2016/03/31/Handler/" data-id="cinebq3t20000nwf0egb0g3yr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能优化/">性能优化</a></li></ul>
@@ -348,7 +287,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/《Android开发艺术探索》/" style="font-size: 10px;">《Android开发艺术探索》</a> <a href="/tags/性能优化/" style="font-size: 10px;">性能优化</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/读书笔记/" style="font-size: 15px;">读书笔记</a>
+      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/《Android开发艺术探索》/" style="font-size: 10px;">《Android开发艺术探索》</a> <a href="/tags/性能优化/" style="font-size: 10px;">性能优化</a> <a href="/tags/设计模式/" style="font-size: 13.33px;">设计模式</a> <a href="/tags/读书笔记/" style="font-size: 16.67px;">读书笔记</a>
     </div>
   </div>
 
@@ -368,6 +307,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/04/24/Prototype/">原型模式分析</a>
+          </li>
         
           <li>
             <a href="/2016/04/21/Singleton/">单例模式分析</a>
